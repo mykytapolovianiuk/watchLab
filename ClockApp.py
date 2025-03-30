@@ -1,9 +1,9 @@
 import turtle
 from DigitalWatch import DigitalWatch
-from script import AnalogClock as AnalogWatch
+from script import AnalogClock as AnalogWatch, Button as Button
 
 class ClockApp():
-    def __init__():
+    def __init__(self):
         self.screen = turtle.Screen()
         self.screen.title("Годинник")
         self.screen.bgcolor("white")
@@ -34,30 +34,29 @@ class ClockApp():
         
         self.analog_watch = AnalogWatch()
         self.digital_watch = DigitalWatch(mode_button = self.digital_watch_mode_button)
-        self.curr_watch = self.analog_watch()
- 
+        self.curr_watch = self.analog_watch
+        self.screen.onclick(self.handle_click)
+        self.start()
+    def start(self):
         self.theme_button.draw()
         self.type_button.draw()
-        self.curr_watch.draw()
-        self.screen.onclick(self.handle_click)
-
+        self.curr_watch.run()
+        self.screen.mainloop()
     def set_theme(self, theme):
         self.theme = theme
         # зміна теми
         if theme == "dark":
             bg_color = "black"
-            fg_color = "white"
             btn_bg = "darkblue"
             btn_fg = "white"
         else:
             bg_color = "white"
-            fg_color = "black"
             btn_bg = "lightblue"
             btn_fg = "black"
 
         self.theme_button.update_colors(btn_bg, btn_fg)
         self.type_button.update_colors(btn_bg, btn_fg)
-        self.digital_watch_mode_button.update_colors(btn_bg,btn_fg)
+        #self.digital_watch_mode_button.update_colors(btn_bg,btn_fg) - changed in digital watch
         self.screen.bgcolor(bg_color)
         self.analog_watch.set_theme(theme)
         self.digital_watch.set_theme(theme)
@@ -75,7 +74,12 @@ class ClockApp():
             self.set_theme(new_theme)
         if self.type_button.is_pressed(x,y):
             self.change_clock_type()
-        if slef.curr_watch == self.digital_watch:
+        if self.curr_watch == self.digital_watch:
             if self.digital_watch_mode_button.is_pressed(x,y):
                 self.digital_watch.change_mode()
                 self.screen.update()
+
+
+if __name__ == '__main__':
+    a1 = ClockApp()
+

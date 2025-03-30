@@ -10,7 +10,7 @@ class DigitalDial():
                        SegmentDigit(position = (self.position[0] - 1*self.segment_length,self.position[1]), available_width = available_width, available_height = available_height, segment_length = self.segment_length),
                        SegmentDigit(position = (self.position[0] + 1*self.segment_length,self.position[1]), available_width = available_width, available_height = available_height, segment_length = self.segment_length),
                        SegmentDigit(position = (self.position[0] + 3*self.segment_length,self.position[1]),available_width = available_width, available_height = available_height, segment_length = self.segment_length)]
-        self.color = 'lightblue'
+        self.color = '#039BE5'
         self.theme = 'light'
         self.t = turtle.Turtle()
         self.t.hideturtle()
@@ -38,7 +38,7 @@ class DigitalDial():
         if theme == 'dark':
             self.color = 'red'
         else:
-            self.color = 'lightblue'
+            self.color = '#039BE5'
         for digit in self.digits:
             digit.update_theme(theme)
         if not running:

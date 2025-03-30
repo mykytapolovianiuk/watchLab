@@ -16,7 +16,7 @@ class SegmentDigit():
         self.t.pensize(4)
         self.t.speed(0)
         self.start_position = (position[0] - self.segment_length/2, position[1]+self.segment_length)
-        self.color = "lightblue"
+        self.color = "#039BE5"
         self.digits = [[1,1,1,1,1,1,0],
                        [0,1,1,0,0,0,0],
                        [1,1,0,1,1,0,1],
@@ -61,7 +61,7 @@ class SegmentDigit():
         if theme == 'dark':
             self.color = 'red'
         else:
-            self.color = 'lightblue'
+            self.color = '#039BE5'
         if self.curr_digit != None:
             self.draw(self.curr_digit, theme_change = 1)
 

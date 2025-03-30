@@ -58,10 +58,14 @@ class DigitalWatch(Watch):
         self.theme = theme
         if theme == "dark":
             self.face_pen.color('lightblue')
+            btn_bg = "darkblue"
+            btn_fg = "white"
         else:
             self.face_pen.color('black')
-
+            btn_bg = "lightblue"
+            btn_fg = "black"
         self.digital_dial.update_theme(theme,self.running)
+        self.mode_button.update_colors(btn_bg, btn_fg, shown = self.running)
         if self.running:
             self.draw_clock_face()
 

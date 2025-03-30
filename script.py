@@ -2,7 +2,7 @@ import turtle
 import time
 import math
 from datetime import datetime
-
+from Watch import Watch
 
 class Digit:
     def __init__(self, value, position, size=20, color="black"):
@@ -23,6 +23,8 @@ class Digit:
     def update_color(self, color):
         self.pen.color(color)
 
+    def erase(self):
+        self.pen.clear()
 
 class DigitFace:
     def __init__(self, radius=200, color="black"):
@@ -41,6 +43,10 @@ class DigitFace:
     def update_color(self, color):
         for digit in self.digits:
             digit.update_color(color)
+
+    def erase(self):
+        for digit in self.digits:
+            digit.erase()
 
 
 class Hand:
@@ -63,6 +69,9 @@ class Hand:
 
     def update_color(self, color):
         self.pen.color(color)
+
+    def erase(self):
+        self.pen.clear()
 
 
 class Button:
@@ -113,23 +122,19 @@ class Button:
         # перевірка кліку на кнопкє
         return (self.x_min <= x <= self.x_max and self.y_min <= y <= self.y_max)
 
-    def update_colors(self, background_color, text_color):
+    def update_colors(self, background_color, text_color, shown = 1):
         self.color = background_color
         self.text_color = text_color
-        self.draw()
+        if shown:
+            self.draw()
+
+
     def erase(self):
         self.pen.clear()
 
 
-class AnalogClock:
+class AnalogClock(Watch):
     def __init__(self, radius=220):
-        # налаштування екрану
-        self.screen = turtle.Screen()
-        self.screen.title("Аналоговий годинник")
-        self.screen.bgcolor("white")
-        self.screen.setup(width=600, height=600)
-        self.screen.tracer(0)  # Вимикаємо автоматичне оновлення для кращої продуктивності
-
         self.radius = radius
         self.theme = "light"
 
@@ -143,34 +148,24 @@ class AnalogClock:
         self.hour_hand = Hand(length=radius * 0.5, width=6, color="black")
         self.minute_hand = Hand(length=radius * 0.7, width=3, color="blue")
         self.second_hand = Hand(length=radius * 0.8, width=1, color="red")
-
+        
         # центральна точка
         self.center_dot = turtle.Turtle()
         self.center_dot.hideturtle()
         self.center_dot.shape("circle")
         self.center_dot.color("black")
         self.center_dot.shapesize(0.5, 0.5)
+
+
+        self.delay = 500
+        self.running = 0
+
+    def draw_clock_face(self):
         self.center_dot.penup()
         self.center_dot.goto(0, 0)
         self.center_dot.showturtle()
+        
 
-        # кнопка для зміни теми
-        self.theme_button = Button(
-            position=(-200, -250),
-            width=120,
-            height=40,
-            text="Змінити тему"
-        )
-
-        # це для кнопочки, яка буде змінювати тип годинниика
-        self.type_button_position = (200, -250)
-
-        self.draw_clock_face()
-        self.theme_button.draw()
-
-        self.screen.onclick(self.handle_click)
-
-    def draw_clock_face(self):
         self.face_pen.clear()
         self.face_pen.penup()
         self.face_pen.goto(0, -self.radius)
@@ -196,52 +191,45 @@ class AnalogClock:
         self.minute_hand.draw(minute_angle)
         self.second_hand.draw(second_angle)
 
-        # оновлює екранчік
-        self.screen.update()
 
     def set_theme(self, theme):
         self.theme = theme
 
         # зміна теми
         if theme == "dark":
-            bg_color = "black"
             fg_color = "white"
             minute_color = "lightblue"
             btn_bg = "darkblue"
             btn_fg = "white"
         else:
-            bg_color = "white"
             fg_color = "black"
             minute_color = "blue"
             btn_bg = "lightblue"
             btn_fg = "black"
 
-        self.screen.bgcolor(bg_color)
         self.face_pen.color(fg_color)
         self.hour_hand.update_color(fg_color)
         self.minute_hand.update_color(minute_color)
         self.center_dot.color(fg_color)
         self.digit_face.update_color(fg_color)
-        self.theme_button.update_colors(btn_bg, btn_fg)
-
+        
         # перемальовуємо його
+        if self.running:
+            self.draw_clock_face()
+            self.update_time()
+
+    def draw(self):
         self.draw_clock_face()
-        self.screen.update()
-    def handle_click(self, x, y):
-        if self.theme_button.is_pressed(x, y):
-            new_theme = "dark" if self.theme == "light" else "light"
-            self.set_theme(new_theme)
 
-    def run(self):
-        # Основний цикл годинника
-        try:
-            while True:
-                self.update_time()
-                time.sleep(0.5)  # Оновлюємо двічі на секунду для плавності
-        except KeyboardInterrupt:
-            print("Годинник зупинено")
-
+    def erase(self):
+        self.face_pen.clear()
+        self.center_dot.hideturtle()
+        self.digit_face.erase()
+        self.minute_hand.erase()
+        self.hour_hand.erase()
+        self.second_hand.erase()
 
 if __name__ == "__main__":
     clock = AnalogClock()
     clock.run()
+    turtle.mainloop()
