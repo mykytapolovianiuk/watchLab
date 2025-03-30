@@ -117,6 +117,8 @@ class Button:
         self.color = background_color
         self.text_color = text_color
         self.draw()
+    def erase(self):
+        self.pen.clear()
 
 
 class AnalogClock:

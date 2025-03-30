@@ -3,14 +3,9 @@ from DigitalDial import DigitalDial
 from Watch import Watch
 from datetime import datetime
 class DigitalWatch(Watch):
-    def __init__(self, height = 100, width = 400, mode = 12, position = (0,0)):
+    def __init__(self, mode_button, height = 100, width = 400, mode = 12, position = (0,0)):
         
-        self.screen = turtle.Screen()
-        self.screen.title("Аналоговий годинник")
-        self.screen.bgcolor("white")
-        self.screen.setup(width=600, height=600)
-        self.screen.tracer(0)  # Вимикаємо автоматичне оновлення для кращої продуктивності
-
+        self.mode_button = mode_button
         self.position = position
         self.height = 100
         self.width = 400
@@ -56,6 +51,7 @@ class DigitalWatch(Watch):
     def draw(self):
         self.draw_clock_face()
         self.digital_dial.draw()
+        self.mode_button.draw()
     def set_theme(self, theme):
         if theme == self.theme:
             return
@@ -78,6 +74,7 @@ class DigitalWatch(Watch):
     def erase(self):
         self.face_pen.clear()
         self.digital_dial.erase()
+        self.mode_button.erase()
 
 if __name__ == '__main__':
     import time

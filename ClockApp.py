@@ -33,7 +33,7 @@ class ClockApp():
         )
         
         self.analog_watch = AnalogWatch()
-        self.digital_watch = DigitalWatch(self.digital_watch_mode_button)
+        self.digital_watch = DigitalWatch(mode_button = self.digital_watch_mode_button)
         self.curr_watch = self.analog_watch()
  
         self.draw_clock_face()
