@@ -224,7 +224,7 @@ class AnalogClock:
 
         # перемальовуємо його
         self.draw_clock_face()
-
+        self.screen.update()
     def handle_click(self, x, y):
         if self.theme_button.is_pressed(x, y):
             new_theme = "dark" if self.theme == "light" else "light"
