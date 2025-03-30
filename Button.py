@@ -1,7 +1,7 @@
 import turtle
 
 class Button:
-    def __init__(self, position, width, height, text, color="purple", text_color="black"):
+    def __init__(self, position, width, height, text, color="lightblue", text_color="black"):
         self.position = position
         self.width = width
         self.height = height
