@@ -7,16 +7,17 @@ class Watch():
         pass
     def draw_clock_face(self):
         pass
-    def run(self):
+    def run(self,screen = turtle.Screen()):
         self.running = 1
         self.draw()
-        self.update()
+        self.update(screen)
     def update_time(self):
         pass
-    def update(self):
+    def update(self,screen):
         if self.running:
             self.update_time()
-            turtle.ontimer(lambda: self.update(), self.delay)
+            screen.update()
+            turtle.ontimer(lambda: self.update(screen), self.delay)
     def draw(self):
         pass
     def erase(self):

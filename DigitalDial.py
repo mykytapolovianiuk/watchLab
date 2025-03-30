@@ -14,7 +14,7 @@ class DigitalDial():
         self.theme = 'light'
         self.t = turtle.Turtle()
         self.t.hideturtle()
-
+        self.t.speed(0)
     def draw_colon(self):
         t = self.t
         t.clear()

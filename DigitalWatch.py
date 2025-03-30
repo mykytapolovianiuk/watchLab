@@ -15,7 +15,7 @@ class DigitalWatch(Watch):
         self.height = 100
         self.width = 400
         self.digital_dial = DigitalDial(self.height, self.width)
-        self.__mode = 12
+        self.__mode = mode
         self.theme = 'light'
         self.face_pen = turtle.Turtle()
         self.face_pen.hideturtle()
@@ -25,7 +25,6 @@ class DigitalWatch(Watch):
         self.face_pen.color('black')
         self.running = 0
         self.delay = 1000
-
     @property
     def mode(self):
         return self.__mode
@@ -34,11 +33,10 @@ class DigitalWatch(Watch):
     def mode(self, value):
         if value == 12 or value == 24:
             self.__mode = value
-            self.update_time()
-        else:
-            print("Немає такого формату")
     
-    
+    def change_mode(self):
+        self.mode = 36 - self.mode
+
     def draw_clock_face(self):
         t = self.face_pen
         t.clear()
@@ -87,13 +85,16 @@ if __name__ == '__main__':
     w1.run()
     w1.set_theme('light')
     turtle.ontimer(lambda: w1.set_theme('light'), 2000)
-    turtle.ontimer(lambda: w1.stop(), 4000)
     turtle.ontimer(lambda: w1.set_theme('dark'), 6000)
     turtle.ontimer(lambda: w1.run(), 8000)
     turtle.ontimer(lambda: w1.set_theme('light'), 10000)
     turtle.ontimer(lambda: w1.set_theme('dark'), 12000)
     print('here')
     turtle.ontimer(lambda: print(13), 13000)
-    turtle.ontimer(lambda: w1.stop(), 14000)
+    turtle.Screen().update()
+    turtle.ontimer(lambda: w1.change_mode(),2000)
+    turtle.ontimer(lambda: w1.change_mode(),4000)
+    turtle.ontimer(lambda: w1.change_mode(),6000)
+
     turtle.mainloop()
 
