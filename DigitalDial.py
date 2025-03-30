@@ -31,7 +31,7 @@ class DigitalDial():
         self.digits[3].draw(minutes%10)
         
     
-    def update_theme(self,theme):
+    def update_theme(self,theme, running = 1):
         if self.theme == theme:
             return
         self.theme = theme
@@ -39,17 +39,23 @@ class DigitalDial():
             self.color = 'red'
         else:
             self.color = 'lightblue'
-        self.draw_colon()
         for digit in self.digits:
             digit.update_theme(theme)
-
-
+        if not running:
+            return
+        self.draw_colon()
+           
     def draw(self, hours = 0, minutes = 0):
         self.digits[0].draw(hours//10)
         self.digits[1].draw(hours%10)
         self.digits[2].draw(minutes//10)
         self.digits[3].draw(minutes%10)
         self.draw_colon()
+        
+    def erase(self):
+        self.t.clear()
+        for digit in self.digits:
+            digit.erase()
 if __name__ == '__main__':
     d1 = DigitalDial()
     d1.draw(0,0)
@@ -58,10 +64,14 @@ if __name__ == '__main__':
     time.sleep(2)
     d1.update(4,12)
     time.sleep(2)
-    d1.update_theme('light')
+
+    d1.erase()
     time.sleep(2)
-    d1.update(23,59)
+    d1.update_theme('light', 0)
+    time.sleep(2)
+    d1.draw(23,59)
     time.sleep(2)
     d1.update(0,1)
+    d1.erase()
     turtle.mainloop()
                        

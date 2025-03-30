@@ -14,6 +14,7 @@ class SegmentDigit():
         self.t = turtle.Turtle()
         self.t.hideturtle()
         self.t.pensize(4)
+        self.t.speed(0)
         self.start_position = (position[0] - self.segment_length/2, position[1]+self.segment_length)
         self.color = "lightblue"
         self.digits = [[1,1,1,1,1,1,0],
@@ -30,7 +31,6 @@ class SegmentDigit():
         self.theme = 'light'
         self.curr_digit = None
     def draw(self,digit,theme_change = 0):
-        print(f"{theme_change =}")
         if self.curr_digit == digit and theme_change == 0:
             return
         self.t.clear()
@@ -62,8 +62,8 @@ class SegmentDigit():
             self.color = 'red'
         else:
             self.color = 'lightblue'
-        
-        self.draw(self.curr_digit, theme_change = 1)
+        if self.curr_digit != None:
+            self.draw(self.curr_digit, theme_change = 1)
 
 
     def erase(self):
