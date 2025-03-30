@@ -1,6 +1,7 @@
 import turtle
 from DigitalWatch import DigitalWatch
-from script import AnalogClock as AnalogWatch, Button as Button
+from AnalogWatch import AnalogWatch
+from Button import Button
 
 class ClockApp():
     def __init__(self):
