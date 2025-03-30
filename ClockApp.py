@@ -36,9 +36,9 @@ class ClockApp():
         self.digital_watch = DigitalWatch(mode_button = self.digital_watch_mode_button)
         self.curr_watch = self.analog_watch()
  
-        self.draw_clock_face()
         self.theme_button.draw()
-
+        self.type_button.draw()
+        self.curr_watch.draw()
         self.screen.onclick(self.handle_click)
 
     def set_theme(self, theme):
